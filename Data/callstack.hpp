@@ -7,5 +7,6 @@ private:
 	std::vector<Call> stack;
 public:
 	void push(Call);
-	void call_top(Stack*);
+	void call_top(Stack*, Heap*);
+	int gettop_args();
 };
