@@ -61,6 +61,7 @@ void execute(Serialized_Data* sd) {
 		case OP_DIV:
 		case OP_CONCAT:
 			arith(&stk, cb.op);
+			stk.push(*stk.get_r()); //push new value
 			break;
 		case OP_POP:
 			stk.pop(stk.get_a_r());
@@ -69,7 +70,8 @@ void execute(Serialized_Data* sd) {
 			cstk.push(new_call(cb.data, C_CALL));
 			break;
 		case OP_CLOSURE:
-			cstk.call_top(&stk);
+			stk.safe_m_pop(cstk.gettop_args());
+			cstk.call_top(&stk, &heap);
 			break;
 		case OP_BACKUPPOP:
 			if (stk.get_r() == nullptr) {
@@ -80,8 +82,10 @@ void execute(Serialized_Data* sd) {
 			stk.push(*heap.load(cb.data));
 			break;
 		case OP_MOVE: //assign
-			std::cout << "heap move: " << cb.data;
-			heap.move(cb.data, *stk.get_r());
+			cstk.push(new_call(cb.data, V_CALL));
+			break;
+		case OP_FLUSH:
+			cstk.call_top(&stk, &heap);
 			break;
 		}
 	}
