@@ -8,6 +8,8 @@ typedef enum {
 	UNQUOTED_CHARSET, //like var foo, there's no quotes
 	VAR,
 
+	END,
+
 	STRING,
 	FLOAT,
 
