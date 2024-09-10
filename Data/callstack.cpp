@@ -1,7 +1,7 @@
 #include "callstack.hpp"
 
 #include <iostream>
-static void call(Call c, Stack* stk) {
+static void call(Call c, Stack* stk, Heap* heap) {
 	if (c.type == C_CALL) {
 		if (c.call_identifier == "print") {
 			auto r1 = stk->get_r();
@@ -25,15 +25,33 @@ static void call(Call c, Stack* stk) {
 			r1->f_val = ov;
 		}
 	}
+	else if (c.type == V_CALL) {
+		//variable definition
+		heap->move(c.call_identifier, *stk->get_r());
+	}
 }
 
+int Callstack::gettop_args() {
+	if (stack.size()) {
+		auto& call = stack.back();
+		switch (call.type) {
+		case C_CALL:
+			if (call.call_identifier == "print") { return 1; }
+			break;
+		case V_CALL:
+			return 1;
+			break;
+		}
+	}
+	return 0;
+}
 
 void Callstack::push(Call c) {
 	stack.emplace_back(c);
 }
-void Callstack::call_top(Stack* stk) {
+void Callstack::call_top(Stack* stk, Heap* heap) {
 	if (stack.size()) {
-		call(stack.back(), stk);
+		call(stack.back(), stk, heap);
 		stack.pop_back();
 	}
 }
