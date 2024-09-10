@@ -19,6 +19,7 @@ typedef enum {
 	LT,
 
 	SPACE,
+	NEWLINE,
 
 	OPENPARA,
 	CLOSEPARA,
