@@ -36,3 +36,9 @@ CentauriObj* Stack::get_a_r() { /* Accessible register */
 	}
 	return r_ptr;
 }
+
+void Stack::safe_m_pop(int amount) {
+	for (int i = 0; i < (amount < stack.size() ? amount : stack.size()); i++) {
+		pop(get_a_r());
+	}
+}
