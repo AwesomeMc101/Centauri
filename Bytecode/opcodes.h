@@ -17,5 +17,6 @@ typedef enum {
 
 	OP_CALL,
 	OP_CLOSURE,
+	OP_FLUSH,
 
 } OpCode;
