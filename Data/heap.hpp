@@ -1,4 +1,4 @@
-//picture a world where you can only allocate variables on the stack 
+//picture a world where you can only allocate variables on the heap
 
 #include <map>
 #include "object.hpp"
