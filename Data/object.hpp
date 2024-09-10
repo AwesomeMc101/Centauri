@@ -16,6 +16,7 @@ CentauriObj new_obj(ObjType ot, std::string s_val);
 
 #define C_CALL 1
 #define U_CALL 2
+#define V_CALL 3
 struct Call {
 	int type;
 	std::string call_identifier;
