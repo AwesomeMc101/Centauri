@@ -12,6 +12,18 @@ Parsed_Data create_parsed_data(std::vector<Token> ts) {
 	Branch current_branch;
 	Parse parse_buf;
 	for (int i = 0; i < ts.size(); i++) {
+		if (ts[i].type == NEWLINE && parse_buf.pt != STRING) {
+			current_branch.parsed_data.emplace_back(parse_buf);
+			reset(parse_buf);
+
+			parse_buf.pt = END;
+			current_branch.parsed_data.emplace_back(parse_buf);
+			reset(parse_buf);
+
+			pd.tree.push_back(current_branch);
+			current_branch.parsed_data.clear();
+			continue;
+		}
 		if (parse_buf.pt == STRING || parse_buf.pt == UNQUOTED_CHARSET || parse_buf.pt == FLOAT) {
 			if (ts[i].type == CLOSEPARA) {
 				if (parse_buf.pt != NIL) {
