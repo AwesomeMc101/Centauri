@@ -16,4 +16,5 @@ public:
 	CentauriObj* get_r(int s = 0); //get last written to register
 	CentauriObj* get_a_r(); //get accessible register
 
+	void safe_m_pop(int);
 };
