@@ -26,7 +26,9 @@ Tokenized_Data get_tokens(std::string line) {
 		case '%':
 			tk.type = PERCENT;
 			break;
-
+		case '\n':
+			tk.type = NEWLINE;
+			break;
 		case ' ':
 			tk.type = SPACE;
 			break;
