@@ -1,5 +1,5 @@
 #include "serialize.hpp"
-
+#include <iostream>
 static void serialize_type(Serialized_Data* sd, Parse pd, int& i, Branch& c_branch);
 
 static Parse peek(int i, const Branch& branch) {
@@ -85,11 +85,14 @@ static void serialize_type(Serialized_Data* sd, Parse pd, int& i, Branch& c_bran
 		break;
 	case VAR:
 		if (peek(i, c_branch).pt == UNQUOTED_CHARSET) {
-			peek_write(sd, (i + 2), c_branch, true); //+1 is =sign.
-			sd->write_byte(OP_POP, "");
+			//sd->write_byte(OP_POP, "");
 			sd->write_byte(OP_MOVE, peek(i, c_branch).data);
 			i++;
 		}
+		break;
+	case END:
+		sd->write_byte(OP_BACKUPPOP, data);
+		sd->write_byte(OP_FLUSH, data);
 		break;
 	}
 }
